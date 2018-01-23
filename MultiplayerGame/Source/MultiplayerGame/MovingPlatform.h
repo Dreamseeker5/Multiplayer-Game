@@ -14,6 +14,7 @@ class MULTIPLAYERGAME_API AMovingPlatform : public AStaticMeshActor
 {
 	GENERATED_BODY()
 
+	///Members added by the engine
 public:
 	AMovingPlatform();
 
@@ -21,6 +22,8 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	///Custom members
+public:
 	UPROPERTY(EditAnywhere)
 		float speed = 20;
 
