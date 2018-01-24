@@ -35,6 +35,20 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 	//Add Widget to viewport
 	if (!ensure(Menu != nullptr)) return; //Pointer protection
 	Menu->AddToViewport();
+
+	//Get hold of the player controller
+	APlayerController* PlayerController = GetFirstLocalPlayerController();
+	if (!ensure(PlayerController != nullptr)) return;
+
+	//Setting the input mode so it only able to interact with the UI
+	FInputModeUIOnly InputModeData;
+	InputModeData.SetWidgetToFocus(Menu->TakeWidget());
+	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+
+	PlayerController->SetInputMode(InputModeData);
+
+	//Makes the mouse cursor show on the screen
+	PlayerController->bShowMouseCursor = true;
 }
 
 void UPuzzlePlatformGameInstance::Host()
