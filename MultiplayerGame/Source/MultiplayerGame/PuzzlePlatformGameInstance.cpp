@@ -3,15 +3,38 @@
 #include "PuzzlePlatformGameInstance.h"
 
 #include "Engine/Engine.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
+
+#include "PlatformTrigger.h"
 
 UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer)
 {
 	UE_LOG(LogTemp, Warning, TEXT("GameInstance Constructor"));
+
+	//Find the widget menu BP and get hold of it as an object
+	ConstructorHelpers::FClassFinder<UUserWidget> MenuBPClass(TEXT("/Game/UI/WBP_Menu"));
+	
+	if (!ensure(MenuBPClass.Class != nullptr)) return; //Pointer protection
+	MenuClass = MenuBPClass.Class;
 }
 
+//Initialize game values just before the game executes
 void UPuzzlePlatformGameInstance::Init()
 {
-	UE_LOG(LogTemp, Warning, TEXT("GameInstance Init"));
+	UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *MenuClass->GetName());
+}
+
+//Creates and adds to the viewport the main menu
+void UPuzzlePlatformGameInstance::LoadMenu()
+{
+	//Create a widget
+	if (!ensure(MenuClass != nullptr)) return; //Pointer protection
+	UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
+	
+	//Add Widget to viewport
+	if (!ensure(Menu != nullptr)) return; //Pointer protection
+	Menu->AddToViewport();
 }
 
 void UPuzzlePlatformGameInstance::Host()
