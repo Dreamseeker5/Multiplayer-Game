@@ -7,6 +7,7 @@
 #include "Blueprint/UserWidget.h"
 
 #include "PlatformTrigger.h"
+#include "Menu System/MyUserWidget.h"
 
 UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer)
 {
@@ -30,7 +31,7 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 {
 	//Create a widget
 	if (!ensure(MenuClass != nullptr)) return; //Pointer protection
-	UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
+	UMyUserWidget* Menu = CreateWidget<UMyUserWidget>(this, MenuClass);
 	
 	//Add Widget to viewport
 	if (!ensure(Menu != nullptr)) return; //Pointer protection
@@ -49,6 +50,8 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 
 	//Makes the mouse cursor show on the screen
 	PlayerController->bShowMouseCursor = true;
+
+	Menu->SetMenuInterface(this);
 }
 
 void UPuzzlePlatformGameInstance::Host()

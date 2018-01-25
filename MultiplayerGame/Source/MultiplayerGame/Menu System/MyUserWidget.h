@@ -14,6 +14,10 @@ class MULTIPLAYERGAME_API UMyUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	void SetMenuInterface(class IMenuInterface* MenuInterface);
+
+protected:
 		virtual bool Initialize();
 
 private:
@@ -25,4 +29,6 @@ private:
 
 	UFUNCTION()
 		void HostServer();
+
+	IMenuInterface* MenuInterface;
 };
