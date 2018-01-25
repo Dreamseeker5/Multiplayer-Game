@@ -26,30 +26,16 @@ void UPuzzlePlatformGameInstance::Init()
 	UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *MenuClass->GetName());
 }
 
-//Creates and adds to the viewport the main menu
+///Called from the level BP
+//Creates and adds the main menu to the viewport 
 void UPuzzlePlatformGameInstance::LoadMenu()
 {
 	//Create a widget
 	if (!ensure(MenuClass != nullptr)) return; //Pointer protection
 	UMyUserWidget* Menu = CreateWidget<UMyUserWidget>(this, MenuClass);
 	
-	//Add Widget to viewport
 	if (!ensure(Menu != nullptr)) return; //Pointer protection
-	Menu->AddToViewport();
-
-	//Get hold of the player controller
-	APlayerController* PlayerController = GetFirstLocalPlayerController();
-	if (!ensure(PlayerController != nullptr)) return;
-
-	//Setting the input mode so it only able to interact with the UI
-	FInputModeUIOnly InputModeData;
-	InputModeData.SetWidgetToFocus(Menu->TakeWidget());
-	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-
-	PlayerController->SetInputMode(InputModeData);
-
-	//Makes the mouse cursor show on the screen
-	PlayerController->bShowMouseCursor = true;
+	Menu->Setup();
 
 	Menu->SetMenuInterface(this);
 }

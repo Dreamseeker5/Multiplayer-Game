@@ -17,6 +17,8 @@ class MULTIPLAYERGAME_API UMyUserWidget : public UUserWidget
 public:
 	void SetMenuInterface(class IMenuInterface* MenuInterface);
 
+	void Setup();
+
 protected:
 		virtual bool Initialize();
 
@@ -31,4 +33,8 @@ private:
 		void HostServer();
 
 	IMenuInterface* MenuInterface;
+
+	virtual void OnLevelRemovedFromWorld(ULevel * InLevel, UWorld * InWorld) override;
+
+	APlayerController* PlayerController;
 };
