@@ -3,14 +3,22 @@
 #include "MyUserWidget.h"
 #include "MenuInterface.h"
 #include "Components/Button.h"
+#include "Components/WidgetSwitcher.h"
+
 
 bool UMyUserWidget::Initialize()
 {
 	bool Succes = Super::Initialize();
 	if (!Succes) return false;
 
-	if (!ensure(Host != nullptr)) return false;
-	Host->OnClicked.AddDynamic(this, &UMyUserWidget::HostServer);
+	if (!ensure(HostButton != nullptr)) return false;
+	HostButton->OnClicked.AddDynamic(this, &UMyUserWidget::HostServer);
+
+	if (!ensure(JoinButton != nullptr)) return false;
+	JoinButton->OnClicked.AddDynamic(this, &UMyUserWidget::OpenJoinMenu);
+
+	if (!ensure(JoinMenuCancelButton != nullptr)) return false;
+	JoinMenuCancelButton->OnClicked.AddDynamic(this, &UMyUserWidget::OpenMainMenu);
 
 	return true;
 }
@@ -60,5 +68,18 @@ void UMyUserWidget::HostServer()
 	///UE_LOG(LogTemp, Warning, TEXT("Hosting Server!"));
 
 	MenuInterface->Host();
+}
+
+void UMyUserWidget::OpenJoinMenu()
+{
+	if (!ensure(MenuSwitcher != nullptr) || !ensure(JoinMenu != nullptr)) return;
+	MenuSwitcher->SetActiveWidget(JoinMenu);
+}
+
+void UMyUserWidget::OpenMainMenu()
+{
+	if (!ensure(MenuSwitcher != nullptr) || !ensure(MainMenu != nullptr)) return;
+	MenuSwitcher->SetActiveWidget(MainMenu);
+
 }
 
