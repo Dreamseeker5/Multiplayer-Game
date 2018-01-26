@@ -52,8 +52,15 @@ private:
 	UPROPERTY(meta = (BindWidget))
 		class UButton* JoinMenuAcceptButton;
 
+	UPROPERTY(meta = (BindWidget))
+		class UEditableTextBox* IPAddressField;
+
 	UFUNCTION()
 		void OpenJoinMenu();
+
+	UFUNCTION()
+		void JoinServer();
+
 
 
 	IMenuInterface* MenuInterface;

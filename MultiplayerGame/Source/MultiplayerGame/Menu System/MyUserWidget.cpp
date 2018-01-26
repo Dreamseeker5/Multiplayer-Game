@@ -4,6 +4,7 @@
 #include "MenuInterface.h"
 #include "Components/Button.h"
 #include "Components/WidgetSwitcher.h"
+#include "Components/EditableTextBox.h"
 
 
 bool UMyUserWidget::Initialize()
@@ -19,6 +20,10 @@ bool UMyUserWidget::Initialize()
 
 	if (!ensure(JoinMenuCancelButton != nullptr)) return false;
 	JoinMenuCancelButton->OnClicked.AddDynamic(this, &UMyUserWidget::OpenMainMenu);
+
+	if (!ensure(JoinMenuAcceptButton != nullptr)) return false;
+	JoinMenuAcceptButton->OnClicked.AddDynamic(this, &UMyUserWidget::JoinServer);
+
 
 	return true;
 }
@@ -65,9 +70,19 @@ void UMyUserWidget::OnLevelRemovedFromWorld(ULevel * InLevel, UWorld * InWorld)
 
 void UMyUserWidget::HostServer()
 {
-	///UE_LOG(LogTemp, Warning, TEXT("Hosting Server!"));
+	if (MenuInterface != nullptr)
+	{
+		MenuInterface->Host();
+	}
+}
 
-	MenuInterface->Host();
+void UMyUserWidget::JoinServer()
+{
+	if (MenuInterface != nullptr)
+	{
+		if (!ensure(IPAddressField != nullptr)) return;
+		MenuInterface->Join(IPAddressField->GetText().ToString());
+	}
 }
 
 void UMyUserWidget::OpenJoinMenu()
@@ -80,6 +95,5 @@ void UMyUserWidget::OpenMainMenu()
 {
 	if (!ensure(MenuSwitcher != nullptr) || !ensure(MainMenu != nullptr)) return;
 	MenuSwitcher->SetActiveWidget(MainMenu);
-
 }
 
