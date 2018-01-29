@@ -7,7 +7,7 @@
 #include "Blueprint/UserWidget.h"
 
 #include "PlatformTrigger.h"
-#include "Menu System/MyUserWidget.h"
+#include "Menu System/MenuWidget.h"
 
 UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer)
 {
@@ -15,9 +15,13 @@ UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitialize
 
 	//Find the widget menu BP and get hold of it as an object
 	ConstructorHelpers::FClassFinder<UUserWidget> MenuBPClass(TEXT("/Game/UI/WBP_Menu"));
-	
 	if (!ensure(MenuBPClass.Class != nullptr)) return; //Pointer protection
 	MenuClass = MenuBPClass.Class;
+
+	ConstructorHelpers::FClassFinder<UUserWidget> InGameMenuBPClass(TEXT("/Game/UI/WBP_InGameMenu"));
+	if (!ensure(InGameMenuBPClass.Class != nullptr)) return; //Pointer protection
+	InGameMenuClass = InGameMenuBPClass.Class;
+
 }
 
 //Initialize game values just before the game executes
@@ -32,8 +36,20 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 {
 	//Create a widget
 	if (!ensure(MenuClass != nullptr)) return; //Pointer protection
-	UMyUserWidget* Menu = CreateWidget<UMyUserWidget>(this, MenuClass);
+	UMenuWidget* Menu = CreateWidget<UMenuWidget>(this, MenuClass);
 	
+	if (!ensure(Menu != nullptr)) return; //Pointer protection
+	Menu->Setup();
+
+	Menu->SetMenuInterface(this);
+}
+
+void UPuzzlePlatformGameInstance::LoadInGameMenu()
+{
+	//Create a widget
+	if (!ensure(InGameMenuClass != nullptr)) return; //Pointer protection
+	UMenuWidget* Menu = CreateWidget<UMenuWidget>(this, InGameMenuClass);
+
 	if (!ensure(Menu != nullptr)) return; //Pointer protection
 	Menu->Setup();
 

@@ -3,21 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "MenuWidget.h"
 #include "MyUserWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MULTIPLAYERGAME_API UMyUserWidget : public UUserWidget
+class MULTIPLAYERGAME_API UMyUserWidget : public UMenuWidget
 {
 	GENERATED_BODY()
-
-public:
-	void SetMenuInterface(class IMenuInterface* MenuInterface);
-
-	void Setup();
 
 protected:
 		virtual bool Initialize();
@@ -63,9 +58,6 @@ private:
 
 
 
-	IMenuInterface* MenuInterface;
 
 	virtual void OnLevelRemovedFromWorld(ULevel * InLevel, UWorld * InWorld) override;
-
-	APlayerController* PlayerController;
 };
