@@ -31,11 +31,19 @@ private:
 	UPROPERTY(meta = (BindWidget))
 		class UButton* JoinButton;
 
+	UPROPERTY(meta = (BindWidget))
+		class UButton* QuitButton;
+
+
 	UFUNCTION()
 		void HostServer();
 
 	UFUNCTION()
 		void OpenMainMenu();
+
+	UFUNCTION()
+		void ExitGame();
+
 
 	//Join menu widgets
 	UPROPERTY(meta = (BindWidget))

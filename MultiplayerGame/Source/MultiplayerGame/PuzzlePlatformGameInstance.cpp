@@ -8,6 +8,7 @@
 
 #include "PlatformTrigger.h"
 #include "Menu System/MenuWidget.h"
+#include "MultiplayerGameGameMode.h"
 
 UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitializer & ObjectInitializer)
 {
@@ -44,6 +45,8 @@ void UPuzzlePlatformGameInstance::LoadMenu()
 	Menu->SetMenuInterface(this);
 }
 
+///Called from the level BP
+//Creates and adds the pause menu to the viewport 
 void UPuzzlePlatformGameInstance::LoadInGameMenu()
 {
 	//Create a widget
@@ -54,6 +57,30 @@ void UPuzzlePlatformGameInstance::LoadInGameMenu()
 	Menu->Setup();
 
 	Menu->SetMenuInterface(this);
+}
+
+void UPuzzlePlatformGameInstance::LoadMainMenu()
+{
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		if (World->IsServer())
+		{
+			AMultiplayerGameGameMode* GM = World->GetAuthGameMode<AMultiplayerGameGameMode>();
+			if (GM)
+			{
+				GM->ReturnToMainMenuHost();
+			}
+		}
+		else
+		{
+			APlayerController* PC = GetFirstLocalPlayerController();
+			if (PC)
+			{
+				PC->ClientReturnToMainMenu("Back to main menu");
+			}
+		}
+	}
 }
 
 void UPuzzlePlatformGameInstance::Host()

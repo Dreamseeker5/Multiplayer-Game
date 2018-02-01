@@ -23,10 +23,11 @@ bool UMyUserWidget::Initialize()
 	if (!ensure(JoinMenuAcceptButton != nullptr)) return false;
 	JoinMenuAcceptButton->OnClicked.AddDynamic(this, &UMyUserWidget::JoinServer);
 
+	if (!ensure(QuitButton != nullptr)) return false;
+	QuitButton->OnClicked.AddDynamic(this, &UMyUserWidget::ExitGame);
 
 	return true;
 }
-
 
 //Method called when the world is being destroyed
 //Override method, change the input mode to game only and hides the mouse cursor
@@ -69,3 +70,14 @@ void UMyUserWidget::OpenMainMenu()
 	MenuSwitcher->SetActiveWidget(MainMenu);
 }
 
+void UMyUserWidget::ExitGame()
+{
+	UWorld* World = GetWorld();
+	if (!ensure(World != nullptr)) return;
+
+	//Get hold of the player controller
+	PlayerController = World->GetFirstPlayerController();
+	if (!ensure(PlayerController != nullptr)) return;
+
+	PlayerController->ConsoleCommand("quit");
+}
