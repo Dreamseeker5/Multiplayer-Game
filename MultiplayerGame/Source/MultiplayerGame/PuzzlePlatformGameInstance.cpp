@@ -5,6 +5,7 @@
 #include "Engine/Engine.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
+#include "OnlineSubsystem.h"
 
 #include "PlatformTrigger.h"
 #include "Menu System/MenuWidget.h"
@@ -28,12 +29,26 @@ UPuzzlePlatformGameInstance::UPuzzlePlatformGameInstance(const FObjectInitialize
 //Initialize game values just before the game executes
 void UPuzzlePlatformGameInstance::Init()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *MenuClass->GetName());
+	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
+	if (Subsystem != nullptr) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Found subsystem %s"), *Subsystem->GetSubsystemName().ToString());
+
+		IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface();
+		if (SessionInterface.IsValid())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Found session interface"));
+		}
+	}
+	else 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Found no subsystem"));
+	}
 }
 
 ///Called from the level BP
 //Creates and adds the main menu to the viewport 
-void UPuzzlePlatformGameInstance::LoadMenu()
+void UPuzzlePlatformGameInstance::LoadMenuWidget()
 {
 	//Create a widget
 	if (!ensure(MenuClass != nullptr)) return; //Pointer protection
