@@ -1,0 +1,35 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Common.props(144,5): warning MSB4211: La propiedad "WindowsTargetPlatformVersion" se va a establecer en un valor por primera vez, pero ya se utilizó en "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.WindowsSDK.props (29,5)".
+  voicechat.cpp
+  stdafx.cpp
+  p2pauth.cpp
+  musicplayer.cpp
+  htmlsurface.cpp
+  gameenginewin32.cpp
+  connectingmenu.cpp
+  clanchatroom.cpp
+  VectorEntity.cpp
+  Sun.cpp
+  StatsAndAchievements.cpp
+  StarField.cpp
+  SpaceWarServer.cpp
+  SpaceWarEntity.cpp
+  SpaceWarClient.cpp
+  Ship.cpp
+  ServerBrowser.cpp
+  RemoteStorage.cpp
+  QuitMenu.cpp
+  PhotonBeam.cpp
+  Generando código...
+  Compilando...
+  MainMenu.cpp
+  Main.cpp
+  Lobby.cpp
+  Leaderboards.cpp
+  Inventory.cpp
+  Friends.cpp
+  BaseMenu.cpp
+  Generando código...
+BaseMenu.obj : warning LNK4075: se omite '/EDITANDCONTINUE' debido a la especificación '/SAFESEH'
+  SteamworksExample.vcxproj -> D:\Unreal Engine\Reisen Workspace\Udemy C++ Unreal Engine\Unreal Multiplayer Mastery\Encrypted\sdk\steamworksexample\.\Debug\SteamworksExample.exe
+          1 archivo(s) copiado(s).
+          1 archivo(s) copiado(s).
